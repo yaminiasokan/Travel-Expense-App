@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+/*
+  DESIGN SYSTEM: "Boarding Pass"
+  ------------------------------------------------------------------
+  Subject: a travel-specific expense ledger. The signature element is
+  the boarding-pass card -- a torn ticket stub with a perforated notch
+  divider and a barcode edge -- used for trips, and reused (in miniature)
+  for settlement rows. Dark ink-navy carries hero/nav surfaces like an
+  airport departure board; content sits on crisp white cards. Gold is
+  the single accent spent on tickets, active states, and money owed to
+  you; coral is reserved for money you owe. No cream backgrounds, no
+  high-contrast editorial serif, no terracotta -- deliberately avoiding
+  the default AI-generated look in favor of a ticket/departure-board feel.
+*/
+:root {
+  --color-paper: #f5f6f4;       /* app background, cool off-white, not cream */
+  --color-paper-dim: #eceef0;   /* subtle hover surface */
+  --color-surface: #ffffff;     /* card surfaces */
+  --color-ink: #171b24;         /* primary text */
+  --color-ink-soft: #5b6270;    /* secondary text */
+  --color-navy: #121a2b;        /* hero / sidebar / departure-board surfaces */
+  --color-navy-soft: #1d2740;   /* navy hover state */
+  --color-navy-line: #2c3650;   /* borders on navy */
+  --color-teal: #12806c;        /* money owed TO you */
+  --color-teal-soft: #dcf0ea;
+  --color-rust: #de5138;        /* money you owe */
+  --color-rust-soft: #fbe2db;
+  --color-gold: #eea430;        /* signature accent: tickets, active nav, highlights */
+  --color-gold-soft: #fbead0;
+  --color-line: #e3e6e8;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-ledger: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-paper-dim: var(--color-paper-dim);
+  --color-surface: var(--color-surface);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-navy: var(--color-navy);
+  --color-navy-soft: var(--color-navy-soft);
+  --color-navy-line: var(--color-navy-line);
+  --color-teal: var(--color-teal);
+  --color-teal-soft: var(--color-teal-soft);
+  --color-rust: var(--color-rust);
+  --color-rust-soft: var(--color-rust-soft);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-line: var(--color-line);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-ledger: var(--font-ledger);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.font-ledger {
+  font-family: var(--font-ledger);
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-family: var(--font-ledger);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------------
+   Boarding-pass card: rounded stub, perforated circular notches,
+   dashed tear line, barcode strip along the bottom edge.
+   ---------------------------------------------------------------- */
+.pass {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.pass-notch::before,
+.pass-notch::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--color-paper);
+  border-radius: 9999px;
+  z-index: 2;
+}
+.pass-notch::before { left: -10px; }
+.pass-notch::after { right: -10px; }
+
+.pass-tear {
+  border-top: 2px dashed var(--color-line);
+}
+
+.barcode {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-ink) 0px,
+    var(--color-ink) 2px,
+    transparent 2px,
+    transparent 5px,
+    var(--color-ink) 5px,
+    var(--color-ink) 6px,
+    transparent 6px,
+    transparent 10px
+  );
+  opacity: 0.55;
+}
+
+.dashed-divider {
+  border-top: 2px dashed var(--color-line);
+}
+
+/* Departure-board style flicker for the hero eyebrow, used sparingly */
+.stamp {
+  transform: rotate(-4deg);
+}
+
+::selection {
+  background: var(--color-gold-soft);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 8px;
+}
+
+/* ----------------------------------------------------------------
+   Dark theme. Every component uses semantic tokens (bg-paper,
+   text-ink, border-line, etc.) rather than hardcoded colors, so
+   re-pointing the same custom properties here re-themes the whole
+   app with no component changes required. Toggled via a `.dark`
+   class on <html> (see ThemeProvider).
+   ---------------------------------------------------------------- */
+.dark {
+  --color-paper: #0d1117;
+  --color-paper-dim: #1c222b;
+  --color-surface: #161b22;
+  --color-ink: #e6e8eb;
+  --color-ink-soft: #8b96a5;
+  --color-navy: #05070c;
+  --color-navy-soft: #10151f;
+  --color-navy-line: #232a38;
+  --color-teal: #35c9ab;
+  --color-teal-soft: #0f2f29;
+  --color-rust: #ff7a5c;
+  --color-rust-soft: #3a2019;
+  --color-gold: #f4bb4c;
+  --color-gold-soft: #372a12;
+  --color-line: #232a35;
+}
+
+.dark body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.dark .barcode {
+  opacity: 0.35;
+}
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}

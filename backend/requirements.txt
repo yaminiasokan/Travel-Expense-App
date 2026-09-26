@@ -1,0 +1,17 @@
+Django==5.0.9
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-filter==24.3
+drf-spectacular==0.27.2
+django-cors-headers==4.4.0
+dj-database-url==2.2.0
+python-dotenv==1.0.1
+Pillow==10.4.0
+pytest==8.3.3
+pytest-django==4.9.0
+
+# Only needed if you're connecting to PostgreSQL (via DATABASE_URL in .env).
+# Uncomment the line below, or install separately with:
+#   pip install psycopg2-binary --only-binary :all:
+# On Windows this avoids needing the Visual C++ Build Tools.
+# psycopg2-binary==2.9.9
